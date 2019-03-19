@@ -3,41 +3,41 @@ function acquire_EMG_data
 clear
 close all force
 
-% HOST_IP=input('Please enter ip of the computer:');%ÊäÈëµçÄÔIP
+% HOST_IP=input('Please enter ip of the computer:');%è¾“å…¥ç”µè„‘IP
 HOST_IP='101.6.56.58';
 global ch;
 % ch=input('Enter the chanel you use:');
 ch=2;
-global plotHandles;%ÇúÏß¾ä±ú
+global plotHandles;%æ›²çº¿å¥æŸ„
 
-%ÅĞ¶Ï¼¡ÈâÆ£ÀÍµÄ±äÁ¿
-global ch_MPF;%´æ´¢ËùÓĞÍ¨µÀÆ½¾ù¹¦ÂÊÆµÂÊÊı¾İ
-global ch_RMS;%´æ´¢ËùÓĞÍ¨µÀ¾ù·½¸ùÊı¾İ
+%åˆ¤æ–­è‚Œè‚‰ç–²åŠ³çš„å˜é‡
+global ch_MPF;%å­˜å‚¨æ‰€æœ‰é€šé“å¹³å‡åŠŸç‡é¢‘ç‡æ•°æ®
+global ch_RMS;%å­˜å‚¨æ‰€æœ‰é€šé“å‡æ–¹æ ¹æ•°æ®
 ch_MPF=[];
 ch_RMS=[];
 
-%ÆÀ¹À¼¡ÈâÁ¦µÄ±äÁ¿
+%è¯„ä¼°è‚Œè‚‰åŠ›çš„å˜é‡
 global restState;
-global inti;%ÅĞ¶ÏÊÇ·ñ³õÊ¼»¯,ÈôÎª1£¬ĞèÒª³õÊ¼»¯£»ÎªÈÎºÎÆäËüÊıÔòÖ±½Ó¶ÁÈ¡ÎÄ¼şÖĞ¼ÇÂ¼µÄ¼¡Èâ·ÅËÉ×´Ì¬Êı¾İ
+global inti;%åˆ¤æ–­æ˜¯å¦åˆå§‹åŒ–,è‹¥ä¸º1ï¼Œéœ€è¦åˆå§‹åŒ–ï¼›ä¸ºä»»ä½•å…¶å®ƒæ•°åˆ™ç›´æ¥è¯»å–æ–‡ä»¶ä¸­è®°å½•çš„è‚Œè‚‰æ”¾æ¾çŠ¶æ€æ•°æ®
 inti=0;
 if inti==1
     restState=[];
 else
-    restState=xlsread('restState.xlsx','A:A');%¶ÁÈ¡¾²Ï¢×´Ì¬Êı¾İ
+    restState=xlsread('restState.xlsx','A:A');%è¯»å–é™æ¯çŠ¶æ€æ•°æ®
 end
 
-interfaceObjectEMG = tcpip(HOST_IP,50041);%´´½¨EMGtcpip¶ÔÏó
-interfaceObjectEMG.InputBufferSize = 6400;%´´½¨»º´æÇø
+interfaceObjectEMG = tcpip(HOST_IP,50041);%åˆ›å»ºEMGtcpipå¯¹è±¡
+interfaceObjectEMG.InputBufferSize = 6400;%åˆ›å»ºç¼“å­˜åŒº
 
-commObject = tcpip(HOST_IP,50040);%´´½¨ÃüÁî½Ó¿Útcpip¶ÔÏó
+commObject = tcpip(HOST_IP,50040);%åˆ›å»ºå‘½ä»¤æ¥å£tcpipå¯¹è±¡
 
-t = timer('Period', 0.5, 'ExecutionMode', 'fixedSpacing', 'TimerFcn', {@updatePlots,plotHandles});%¶¨Ê±Æ÷£¬Ã¿0.5Ãë¸üĞÂÍ¼Æ¬
+t = timer('Period', 0.5, 'ExecutionMode', 'fixedSpacing', 'TimerFcn', {@updatePlots,plotHandles});%å®šæ—¶å™¨ï¼Œæ¯0.5ç§’æ›´æ–°å›¾ç‰‡
 
 global data_arrayEMG;
-data_arrayEMG=[];%´æ´¢EMGÊı¾İ
-global rateAdjustedEmgBytesToRead;%µ÷Õû¶ÁÈ¡EMGbytesËÙ¶ÈµÄ±äÁ¿
+data_arrayEMG=[];%å­˜å‚¨EMGæ•°æ®
+global rateAdjustedEmgBytesToRead;%è°ƒæ•´è¯»å–EMGbytesé€Ÿåº¦çš„å˜é‡
 
-%´´½¨Í¼Æ¬ÏÔÊ¾
+%åˆ›å»ºå›¾ç‰‡æ˜¾ç¤º
 figureHandles=zeros(length(ch),1);
 plotHandles=zeros(length(ch),2);
 axesHandles=zeros(length(ch),2);
@@ -60,42 +60,42 @@ for i=1:length(ch)
     title('filtered signal');
 end
 
-fopen(commObject);%´ò¿ªÃüÁî½Ó¿Ú
+fopen(commObject);%æ‰“å¼€å‘½ä»¤æ¥å£
 
-pause(1);%ÔİÍ£1Ãë
-fread(commObject,commObject.BytesAvailable);%¶ÁÈ¡È«²¿ÃüÁî
-fprintf(commObject, sprintf(['RATE 2000\r\n\r']));%Ğ´Èëstr'Rate 2000    '
-pause(1);%ÔİÍ£1Ãë
-fread(commObject,commObject.BytesAvailable);%¶ÁÈ¡È«²¿ÃüÁî
-fprintf(commObject, sprintf(['RATE?\r\n\r']));%Ğ´Èëstr'Rate?     '
-pause(1);%ÔİÍ£1Ãë
-data = fread(commObject,commObject.BytesAvailable);%¶ÁÈ¡È«²¿ÃüÁîµ½data
+pause(1);%æš‚åœ1ç§’
+fread(commObject,commObject.BytesAvailable);%è¯»å–å…¨éƒ¨å‘½ä»¤
+fprintf(commObject, sprintf(['RATE 2000\r\n\r']));%å†™å…¥str'Rate 2000    '
+pause(1);%æš‚åœ1ç§’
+fread(commObject,commObject.BytesAvailable);%è¯»å–å…¨éƒ¨å‘½ä»¤
+fprintf(commObject, sprintf(['RATE?\r\n\r']));%å†™å…¥str'Rate?     '
+pause(1);%æš‚åœ1ç§’
+data = fread(commObject,commObject.BytesAvailable);%è¯»å–å…¨éƒ¨å‘½ä»¤åˆ°data
 
-emgRate = strtrim(char(data'));%½«date×ª»»Îª×Ö·ûÊı×é²¢É¾³ıÇ°µ¼ºÍÎ²Ëæ¿Õ°×´æ´¢ÔÚemgRate
-if(strcmp(emgRate, '1925.926'))%±È½ÏemgRateºÍ'1925.926'
+emgRate = strtrim(char(data'));%å°†dateè½¬æ¢ä¸ºå­—ç¬¦æ•°ç»„å¹¶åˆ é™¤å‰å¯¼å’Œå°¾éšç©ºç™½å­˜å‚¨åœ¨emgRate
+if(strcmp(emgRate, '1925.926'))%æ¯”è¾ƒemgRateå’Œ'1925.926'
     rateAdjustedEmgBytesToRead=1664;
 else 
     rateAdjustedEmgBytesToRead=1728;
-end%ÉèÖÃ¶ÁÈ¡ËÙ¶È1664
+end%è®¾ç½®è¯»å–é€Ÿåº¦1664
 
  bytesToReadEMG = rateAdjustedEmgBytesToRead;
  interfaceObjectEMG.BytesAvailableFcn = {@localReadAndPlotMultiplexedEMG,interfaceObjectEMG};
  interfaceObjectEMG.BytesAvailableFcnMode = 'byte';
  interfaceObjectEMG.BytesAvailableFcnCount = bytesToReadEMG;
- %ÉèÖÃ¶ÁÈ¡£¬µ±ÓĞbytesToReadEMG£¨µÈÓÚµ÷ÕûËÙ¶È£©1664¸ö×Ö½ÚÔÚ»º³åÇøÊ±£¬×Ô¶¯»Øµ÷º¯ÊılocalReadAndPlotMultiplexedEMG
+ %è®¾ç½®è¯»å–ï¼Œå½“æœ‰bytesToReadEMGï¼ˆç­‰äºè°ƒæ•´é€Ÿåº¦ï¼‰1664ä¸ªå­—èŠ‚åœ¨ç¼“å†²åŒºæ—¶ï¼Œè‡ªåŠ¨å›è°ƒå‡½æ•°localReadAndPlotMultiplexedEMG
  
  drawnow
  start(t);
  
  try
-    fopen(interfaceObjectEMG);%´ò¿ª¶ÔÏó
+    fopen(interfaceObjectEMG);%æ‰“å¼€å¯¹è±¡
 catch
 %     localCloseFigure(t);
     delete(figureHandles);
     error('CONNECTION ERROR: Please start the Delsys Trigno Control Application and try again');
  end
 
- fprintf(commObject, sprintf(['START\r\n\r']));%Ğ´Èë'START    'ÃüÁî
+ fprintf(commObject, sprintf(['START\r\n\r']));%å†™å…¥'START    'å‘½ä»¤
 end
 
 
@@ -106,20 +106,20 @@ global rateAdjustedEmgBytesToRead;
 
 bytesReady = interfaceObjectEMG.BytesAvailable;
 bytesReady = bytesReady - mod(bytesReady, rateAdjustedEmgBytesToRead);%%1664
-%È¡byteReady¿ÉÒÔÕû³ırateAdjustEmgBytesToReadµÄ²¿·Ö£¬¼´n1664
+%å–byteReadyå¯ä»¥æ•´é™¤rateAdjustEmgBytesToReadçš„éƒ¨åˆ†ï¼Œå³n1664
 if (bytesReady == 0)
     return
-end%bytesReady²»¹»Õû³ırateAdjustEmgBytesToReadÔò·µ»Øµ÷ÓÃº¯ÊıµÄ²¿·Ö
+end%bytesReadyä¸å¤Ÿæ•´é™¤rateAdjustEmgBytesToReadåˆ™è¿”å›è°ƒç”¨å‡½æ•°çš„éƒ¨åˆ†
 
 global data_arrayEMG
-data = cast(fread(interfaceObjectEMG,bytesReady), 'uint8');%½«¶ÁÈ¡µ½µÄ×Ö½Ú×ª»»Îªunit8Êı¾İÀàĞÍ£¬´æÎªdata
-data = typecast(data, 'single');%½«date×ª»»ÎªsingleÊı¾İÀà
+data = cast(fread(interfaceObjectEMG,bytesReady), 'uint8');%å°†è¯»å–åˆ°çš„å­—èŠ‚è½¬æ¢ä¸ºunit8æ•°æ®ç±»å‹ï¼Œå­˜ä¸ºdata
+data = typecast(data, 'single');%å°†dateè½¬æ¢ä¸ºsingleæ•°æ®ç±»
 
 
-if(size(data_arrayEMG, 1) < rateAdjustedEmgBytesToRead*19)%date_arrayEMGÔªËØ¸öÊıÓërateAdjustedEmgBytesToRead1664*19±È½Ï
-    data_arrayEMG = [data_arrayEMG; data];%date¼Óµ½date_arrayEMGµÄºóÃæ
+if(size(data_arrayEMG, 1) < rateAdjustedEmgBytesToRead*19)%date_arrayEMGå…ƒç´ ä¸ªæ•°ä¸rateAdjustedEmgBytesToRead1664*19æ¯”è¾ƒ
+    data_arrayEMG = [data_arrayEMG; data];%dateåŠ åˆ°date_arrayEMGçš„åé¢
 else
-    data_arrayEMG = [data_arrayEMG(size(data,1) + 1:size(data_arrayEMG, 1));data];%½«data·ÅÔÚdata_arrrayEMGµÄÇ°Ãæ£¬²¢°ÑÇ°ÃæµÄÊı¾İÏòºóÒÆ
+    data_arrayEMG = [data_arrayEMG(size(data,1) + 1:size(data_arrayEMG, 1));data];%å°†dataæ”¾åœ¨data_arrrayEMGçš„å‰é¢ï¼Œå¹¶æŠŠå‰é¢çš„æ•°æ®å‘åç§»
 end
 
 end
@@ -139,22 +139,22 @@ RMS=zeros(length(ch),1);
 
 
 for i = 1:length(ch)
-    data_ch = data_arrayEMG(ch(i):16:8000);%´Ódata_arrayEMGÊı×éÖĞÈ¡³öÒ»¸öÍ¨µÀµÄÊı¾İ
-    data_filter=process(data_ch,ch(i));%½«Êı¾İÂË²¨
+    data_ch = data_arrayEMG(ch(i):16:8000);%ä»data_arrayEMGæ•°ç»„ä¸­å–å‡ºä¸€ä¸ªé€šé“çš„æ•°æ®
+    data_filter=process(data_ch,ch(i));%å°†æ•°æ®æ»¤æ³¢
     set(plotHandles(i,1),'YData',data_ch);
     set(plotHandles(i,2),'YData',data_filter);
     drawnow
     
-    %¼¡Á¦ÆÀ¹À
+    %è‚ŒåŠ›è¯„ä¼°
     muscleForceRMS(inti,restState,data_filter);
      
-    %µ±Ç°´°¿ÚµÄMPFºÍRMS
+    %å½“å‰çª—å£çš„MPFå’ŒRMS
     MPF(i)=meanPowerFrequency(data_filter);
     RMS(i)=rootMeanSquare(data_filter); 
     
 end
 
-%ÅĞ¶Ï¼¡ÈâÊÇ·ñÆ£ÀÍ
+%åˆ¤æ–­è‚Œè‚‰æ˜¯å¦ç–²åŠ³
 fatigue(MPF,RMS);
 
     
