@@ -17,12 +17,12 @@ for i=1:L
     d=data(i);
     x=[sin(2*pi*f0*(i-1)/Fs)
         cos(2*pi*f0*(i-1)/Fs)];
-    K=(P_last * x)/(lamda + x'* P_last * x);   %¼ÆËãÔöÒæÊ¸Á¿
-    y = x'* w_last;                          %¼ÆËãFIRÂË²¨Æ÷Êä³ö
-    Eta = d - y;                             %¼ÆËã¹À¼ÆµÄÎó²î
-    w = w_last + K * Eta;                    %¼ÆËãÂË²¨Æ÷ÏµÊıÊ¸Á¿
-    P = (I - K * x')* P_last/lamda;          %¼ÆËãÎó²îÏà¹Ø¾ØÕó
-    %±äÁ¿¸üÌæ
+    K=(P_last * x)/(lamda + x'* P_last * x);   %è®¡ç®—å¢ç›ŠçŸ¢é‡
+    y = x'* w_last;                          %è®¡ç®—FIRæ»¤æ³¢å™¨è¾“å‡º
+    Eta = d - y;                             %è®¡ç®—ä¼°è®¡çš„è¯¯å·®
+    w = w_last + K * Eta;                    %è®¡ç®—æ»¤æ³¢å™¨ç³»æ•°çŸ¢é‡
+    P = (I - K * x')* P_last/lamda;          %è®¡ç®—è¯¯å·®ç›¸å…³çŸ©é˜µ
+    %å˜é‡æ›´æ›¿
     P_last = P;
     w_last = w;
     y_out(i) = y;
