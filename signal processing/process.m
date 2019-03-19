@@ -1,6 +1,6 @@
 function [filtered_signal] = process(data,channel)
-%1.´øÍ¨ÂË²¨ 2.Ïİ²¨ÂË²¨
-%   ´Ë´¦ÏÔÊ¾ÏêÏ¸ËµÃ÷
+%1.å¸¦é€šæ»¤æ³¢ 2.é™·æ³¢æ»¤æ³¢
+%   æ­¤å¤„æ˜¾ç¤ºè¯¦ç»†è¯´æ˜
 filtered_signal=[];
 if ~isempty(data)
     %     data1=bandpass(data,10,500);
@@ -18,11 +18,11 @@ if ~isempty(data)
     Fs=2000;
     
     %     f0=100;
-    %     Q=100;%Æ·ÖÊÒòÊı
+    %     Q=100;%å“è´¨å› æ•°
     %     wo=f0/(Fs/2);
     %     bw=wo/Q;
-    %     [b1,a1]=iirnotch(wo,bw);%Éè¼Æ100ºÕ×ÈÏİ²¨ÂË²¨Æ÷
-    %     data2=filter(b1,a1,data1);%100ºÕ×È¹ıÂËĞÅºÅ
+    %     [b1,a1]=iirnotch(wo,bw);%è®¾è®¡100èµ«å…¹é™·æ³¢æ»¤æ³¢å™¨
+    %     data2=filter(b1,a1,data1);%100èµ«å…¹è¿‡æ»¤ä¿¡å·
     
     data2=notchfilter(data1,50);
     
@@ -32,8 +32,8 @@ if ~isempty(data)
     %     Q=100;
     %     wo=f01/(Fs/2);
     %     bw=wo/Q;
-    %     [b2,a2]=iirnotch(wo,bw);%Éè¼Æ50ºÕ×ÈÏİ²¨ÂË²¨Æ÷
-    %     filtered_signal=filter(b2,a2,data2);%50ºÕ×È¹ıÂËĞÅºÅ
+    %     [b2,a2]=iirnotch(wo,bw);%è®¾è®¡50èµ«å…¹é™·æ³¢æ»¤æ³¢å™¨
+    %     filtered_signal=filter(b2,a2,data2);%50èµ«å…¹è¿‡æ»¤ä¿¡å·
     
     filtered_signal=notchfilter(data2,100);
     
@@ -42,28 +42,28 @@ if ~isempty(data)
     
     
     if  0
-        L=length(data);%ĞÅºÅ³¤¶È
-        Fs=1000;%²ÉÑùÆµÂÊ
-        T=1/Fs;%²ÉÑùÊ±¼ä
-        t=(0:L-1)*T;%Ê±¼ä
-        N=2^nextpow2(L);%²ÉÑùµãÊı£¬µãÊıÔ½´ó·ùÖµÔ½¾«È·
+        L=length(data);%ä¿¡å·é•¿åº¦
+        Fs=1000;%é‡‡æ ·é¢‘ç‡
+        T=1/Fs;%é‡‡æ ·æ—¶é—´
+        t=(0:L-1)*T;%æ—¶é—´
+        N=2^nextpow2(L);%é‡‡æ ·ç‚¹æ•°ï¼Œç‚¹æ•°è¶Šå¤§å¹…å€¼è¶Šç²¾ç¡®
         
-        offt=fft(data,N)/N*2;%ÕæÊµ·ùÖµ
+        offt=fft(data,N)/N*2;%çœŸå®å¹…å€¼
         offt=abs(offt);
         
-        yfft=fft(filtered_signal,N)/N*2;%ÕæÊµ·ùÖµ
+        yfft=fft(filtered_signal,N)/N*2;%çœŸå®å¹…å€¼
         yfft=abs(yfft);
         
-        f=Fs/N*(0:N-1);%ÆµÂÊ
+        f=Fs/N*(0:N-1);%é¢‘ç‡
         
         figure(2)
         subplot(2,1,1)
-        plot(f(1:N/2),offt(1:N/2));%fft·µ»ØµÄÊı¾İ½á¹¹¾ßÓĞ¶Ô³ÆĞÔÒò´ËÖ»È¡Ò»°ë
+        plot(f(1:N/2),offt(1:N/2));%fftè¿”å›çš„æ•°æ®ç»“æ„å…·æœ‰å¯¹ç§°æ€§å› æ­¤åªå–ä¸€åŠ
         grid;
         ylim([0 0.00005]);
         xlabel('Frequency(Hz)');
         ylabel('Magnitude(dB)');
-        title('Input signal');%Ô­Ê¼ĞÅºÅ¸µÀïÒ¶±ä»»
+        title('Input signal');%åŸå§‹ä¿¡å·å‚…é‡Œå¶å˜æ¢
         
         subplot(2,1,2);
         plot(f(1:N/2),yfft(1:N/2));
@@ -71,24 +71,24 @@ if ~isempty(data)
         ylim([0 0.00005]);
         xlabel('Frequency (Hz)');
         ylabel('Magnitude (dB)');
-        title('Filter output');%ÂË²¨ºóĞÅºÅµÄ¸µÀïÒ¶±ä»»
+        title('Filter output');%æ»¤æ³¢åä¿¡å·çš„å‚…é‡Œå¶å˜æ¢
         
         
         
-        offt=fft(data1,N)/N*2;%ÕæÊµ·ùÖµ
+        offt=fft(data1,N)/N*2;%çœŸå®å¹…å€¼
         offt=abs(offt);
         
-        yfft=fft(data2,N)/N*2;%ÕæÊµ·ùÖµ
+        yfft=fft(data2,N)/N*2;%çœŸå®å¹…å€¼
         yfft=abs(yfft);
         
         figure(3)
         subplot(2,1,1)
-        plot(f(1:N/2),offt(1:N/2));%fft·µ»ØµÄÊı¾İ½á¹¹¾ßÓĞ¶Ô³ÆĞÔÒò´ËÖ»È¡Ò»°ë
+        plot(f(1:N/2),offt(1:N/2));%fftè¿”å›çš„æ•°æ®ç»“æ„å…·æœ‰å¯¹ç§°æ€§å› æ­¤åªå–ä¸€åŠ
         grid;
         ylim([0 0.00005]);
         xlabel('Frequency(Hz)');
         ylabel('Magnitude(dB)');
-        title('After Bandpass filter');%Ô­Ê¼ĞÅºÅ¸µÀïÒ¶±ä»»
+        title('After Bandpass filter');%åŸå§‹ä¿¡å·å‚…é‡Œå¶å˜æ¢
         
         subplot(2,1,2);
         plot(f(1:N/2),yfft(1:N/2));
@@ -96,7 +96,7 @@ if ~isempty(data)
         ylim([0 0.00005]);
         xlabel('Frequency (Hz)');
         ylabel('Magnitude (dB)');
-        title('After Bandpass filter and 100Hz notch filter');%ÂË²¨ºóĞÅºÅµÄ¸µÀïÒ¶±ä»»
+        title('After Bandpass filter and 100Hz notch filter');%æ»¤æ³¢åä¿¡å·çš„å‚…é‡Œå¶å˜æ¢
     end
     
 end
