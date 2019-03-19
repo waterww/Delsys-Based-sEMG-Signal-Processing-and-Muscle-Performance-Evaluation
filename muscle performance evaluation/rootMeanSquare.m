@@ -1,6 +1,6 @@
 function [RMS] = rootMeanSquare(data)
-%¼ÆËã¾ù·½¸ù
-%   ´Ë´¦ÏÔÊ¾ÏêÏ¸ËµÃ÷
+%è®¡ç®—å‡æ–¹æ ¹
+%   æ­¤å¤„æ˜¾ç¤ºè¯¦ç»†è¯´æ˜
 a=sum(data.^2);
 RMS=sqrt(a/length(data));
 end
