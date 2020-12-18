@@ -13,4 +13,5 @@ Raw sEMG signal is weak, unstable and random. Based on previous research, I adop
 ## Feature Extraction
 This is only a heuristic plan to estimate muscle force and detect muscle fatigue based on the change in Root Mean Square and Mean Power Frequency of sEMG signal data.
 ![muscle force](https://github.com/waterww/Delsys-Based-sEMG-Signal-Processing-and-Muscle-Performance-Evaluation/raw/master/image/4.png)
+
 ![muscle fatigue](https://github.com/waterww/Delsys-Based-sEMG-Signal-Processing-and-Muscle-Performance-Evaluation/raw/master/image/5.png)
